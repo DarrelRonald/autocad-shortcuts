@@ -14,6 +14,7 @@ Last version prepared by Harm te Velde at Maxwan.
 * add the path to that folder in "Options > Files > Support File Search Path"
 * move it to the top of the list.
 * add the same path to "Trusted Locations"
+* if you do not restart AutoCAD, you can use the command `<reinit>` and select the `<PGP File>`
 
 ## AutoDesk AutoLISP resources
 [AutoLISP developers guide](https://knowledge.autodesk.com/search-result/caas/CloudHelp/cloudhelp/2018/ENU/AutoCAD-AutoLISP/files/GUID-265AADB3-FB89-4D34-AA9D-6ADF70FF7D4B-htm.html)
