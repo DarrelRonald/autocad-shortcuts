@@ -1,0 +1,48 @@
+;polyline build
+
+(defun c:pb(/ newset ss cn ent entn max)
+  (setvar "cmdecho" 0)
+  (setvar "highlight" 0)
+  (setq ss (ssget))
+  (command "._Select" ss "")
+  (setq ss (ssget "P" '(   (-4 . "<OR") 
+                           (0 . "*POLYLINE")
+                           (0 . "LINE")
+                           (0 . "ARC")
+                           (-4 . "OR>")
+                       )
+  )        )
+  (if (= ss nil)
+    (princ "Nothing to do.")
+    (progn
+      (setq max (sslength ss) cn 0)
+      (repeat max
+      (princ (strcat "\r" (rtos (* 100.0 (/ cn 1.0 max)) 2 0) " % Done    "))
+      (setq entn (ssname ss cn))
+      (setq cn (1+ cn))
+      (setq ent (entget entn))
+      (if ent
+        (progn
+          (cond 
+            ((or (= (cdr (assoc 0 ent)) "LINE")
+                    (= (cdr (assoc 0 ent)) "ARC")
+                )
+              (command "._Pedit" entn "Yes" "Join" ss "" "")
+            )
+            ((/= (rem (cdr (assoc 70 ent)) 2) 1)
+              (command "._Pedit" entn "Join" ss "" "")
+            )
+            )
+          )
+        )  
+      )
+    )
+  )
+  (setvar "cmdecho" 1)
+  (setvar "highlight" 1)
+  (princ)
+)
+(defun tk_r2d(a)
+  (* a (/ 180.0 PI))
+)
+
